@@ -49,6 +49,11 @@
 
             PastryShops = PastryShops.Where(x => x.Code != _code).ToList();
         }
+
+        public void Append(IPastryShop element)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }

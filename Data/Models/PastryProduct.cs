@@ -42,7 +42,7 @@
             get => _count;
             set
             {
-                if (value > 1 || value >= int.MaxValue)
+                if (value < 1 || value >= int.MaxValue)
                 {
                     throw new ArgumentException("It is not correct count for product", nameof(Count));
                 }

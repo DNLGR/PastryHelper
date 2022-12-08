@@ -13,7 +13,29 @@
         {
             _parser = new JsonParser();
 
-            PastryTable = new PastryTable();
+            PastryTable = new PastryTable()
+            {
+                PastryShops = new List<PastryShop>()
+                {
+                    new PastryShop() { Code = 1, Name = "10", Products = new List<PastryProduct>() 
+                    { 
+                        new PastryProduct() { Code = 1, Name = "Торт", Count = 1 },
+                        new PastryProduct() { Code = 1, Name = "Печенье", Count = 1 },
+                        new PastryProduct() { Code = 1, Name = "Пирожное", Count = 1 },
+                        new PastryProduct() { Code = 1, Name = "Плюшка", Count = 1 },
+                        new PastryProduct() { Code = 1, Name = "Рулет", Count = 1 }
+                    } },
+
+                    new PastryShop() { Code = 2, Name = "27", Products = new List<PastryProduct>()
+                    {
+                        new PastryProduct() { Code = 1, Name = "Торт", Count = 6 },
+                        new PastryProduct() { Code = 1, Name = "Печенье", Count = 4 },
+                        new PastryProduct() { Code = 1, Name = "Пирожное", Count = 2 },
+                        new PastryProduct() { Code = 1, Name = "Плюшка", Count = 71 },
+                        new PastryProduct() { Code = 1, Name = "Рулет", Count = 11 }
+                    } },
+                }
+            };
         }
         #endregion
 

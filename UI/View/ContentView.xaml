@@ -1,5 +1,5 @@
 ﻿<Window x:Class="UI.View.ContentView"
-        xmlns:materiald="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,53 +9,114 @@
         mc:Ignorable="d"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Title="Кондитерка" Height="650" Width="1200">
+        Title="Кондитерка" Height="650" Width="1200"
+        Background="{StaticResource PrimaryHueMidForegroundBrush}">
 
     <Window.DataContext>
         <vm:ContentViewModel />
     </Window.DataContext>
     
-    <Grid>
+    <StackPanel>
         <!--#region Header-->
-        <DockPanel VerticalAlignment="Top">
-            <TextBlock Text="Учет выпуска продукции по кондитерскому цеху"
-                       Margin="40, 0"
+        <StackPanel>
+            <DockPanel VerticalAlignment="Top">
+                <TextBlock Text="Учет выпуска продукции по кондитерскому цеху"
+                       Margin="20, 0"
+                       FontSize="16"
+                       FontFamily="Segoe UI Light"
                        VerticalAlignment="Center"
-                       Style="{StaticResource MaterialDesignBody2TextBlock}" />
+                       Foreground="{StaticResource PrimaryHueLightBrush}"
+                       Style="{DynamicResource MaterialDesignCaptionTextBlock}" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 20 5">
+                    <Button Content="{materialDesign:PackIcon Minimize}"
+                        Command="{Binding HeaderButtonMinimizeCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="2" />
+
+                    <Button Content="{materialDesign:PackIcon Maximize}"
+                        Command="{Binding HeaderButtonWindowStateCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="2" />
+
+                    <Button Content="{materialDesign:PackIcon Close}"
+                        Command="{Binding HeaderButtonCloseCommand}"
+                        Style="{StaticResource MaterialDesignFlatButton}"
+                        Margin="2" />
+                </StackPanel>
+            </DockPanel>
             
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-                <Button Content="{materiald:PackIcon Minimize}"
-                        Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}"
-                        Margin="2" />
-
-                <Button Content="{materiald:PackIcon Maximize}"
-                        Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}"
-                        Margin="2" />
-
-                <Button Content="{materiald:PackIcon Close}"
-                        Style="{StaticResource MaterialDesignOutlinedSecondaryDarkButton}"
-                        Margin="2" />
-            </StackPanel>
-        </DockPanel>
+            <Separator Background="{StaticResource PrimaryHueDarkBrush}"
+                       Margin="20 0 20 0" />
+        </StackPanel>
         <!--#endregion-->
         
         <!--#region Content -->
-        <StackPanel>
+        <Grid Margin="20 5 20 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="15" />
+            </Grid.RowDefinitions>
+
+            <!--#region Sidebar-->
+            <ListBox HorizontalAlignment="Left"
+                     VerticalAlignment="Center"
+                     Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                     Background="{DynamicResource PrimaryHueLightForegroundBrush}"
+                     SelectedIndex="0">
+                
+                <ListBoxItem Content="{materialDesign:PackIcon Kind=Home,Size=24}"
+                             Margin="5"/>
+
+                <ListBoxItem Content="{materialDesign:PackIcon Kind=Settings,Size=24}" 
+                             Margin="5"/>
+
+                <ListBoxItem Content="{materialDesign:PackIcon Kind=About,Size=24}" 
+                             Margin="5"/>
+
+            </ListBox>
+            <!--#endregion-->
+
             <!-- Shop listbox -->
-            <StackPanel Orientation="Horizontal">
-                <ListBox ItemsSource="{Binding PastryShops}"/>
+            <StackPanel Orientation="Horizontal" Grid.Column="1">
+                <ListView ItemsSource="{Binding PastryTable.PastryShops}"
+                          Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                            
+                                            Header="Name" />
+                            
+                            <GridViewColumn DisplayMemberBinding="{Binding Products}"
+                                            Header="Products" />
+                            <GridViewColumn>.
+                               <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ListBox ItemsSource="{Binding Products}" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}" Margin="0 0 10 0" />
+                                                        <TextBlock Text="{Binding Count}" />
+
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
-        </StackPanel>
-        <!--#endregion-->
-        
-        <!--#region Footer-->
-        <StackPanel VerticalAlignment="Bottom" Height="32">
-            <TextBlock Text="Watermark" 
-                       FontFamily="Segoe UI Light" 
-                       FontSize="14"
-                       VerticalAlignment="Center" 
-                       HorizontalAlignment="Center" />
-        </StackPanel>
-        <!--#endregion-->
-    </Grid>
+            <!--#endregion-->
+
+        </Grid>
+    </StackPanel>
 </Window>
